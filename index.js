@@ -6,13 +6,21 @@ var EResult = require('./resources/EResult.json');
 
 module.exports = SteamWebAPI;
 
-function SteamWebAPI(key, localAddress) {
+function SteamWebAPI(key, localAddress, accessToken) {
+	if (key && accessToken) {
+		throw new Error("Cannot use both API key and access token. Please provide only one.");
+	}
+
 	if (key) {
 		this.key = key;
 	}
 
 	if (localAddress) {
 		this.localAddress = localAddress;
+	}
+
+	if (accessToken) {
+		this.accessToken = accessToken;
 	}
 }
 
@@ -57,6 +65,8 @@ SteamWebAPI.prototype._req = function(httpMethod, iface, method, version, input,
 
 	if (this.key) {
 		input.key = this.key;
+	} else if (this.accessToken) {
+		input.access_token = this.accessToken;
 	}
 
 	input.format = "json";

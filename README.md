@@ -10,19 +10,34 @@ responses.
 
 # Constructor
 
-The constructor takes two arguments: `key` and `localAddress`.
+The constructor takes three arguments: `key`, `localAddress`, and `accessToken`.
 
 ```js
 var SteamWebAPI = require('@doctormckay/steam-webapi');
+
+// Using API key
 var api = new SteamWebAPI("yourapikey", "192.168.0.5");
+
+// Using access token
+var api = new SteamWebAPI(null, "192.168.0.5", "your_access_token");
 ```
 
-The first argument is your [API key](https://steamcommunity.com/dev/apikey). The second is the local IP address you want
-to make your requests from. Both are optional. If you don't provide an API key you can only use the methods that
-don't require one.
+All arguments are optional. You can provide either an API key OR an access token, but not both. If you don't provide 
+either, you can only use the methods that don't require authentication.
 
 You can change your API key at any time by assigning it to the `key` property. Same goes for `localAddress` with the
-`localAddress` property.
+`localAddress` property and `accessToken` with the `accessToken` property.
+
+## Access Token Support
+
+You can also use access tokens instead of API keys. Set them in the constructor or assign directly to the `accessToken` property:
+
+```js
+var api = new SteamWebAPI();
+api.accessToken = "your_access_token";
+```
+
+Note: You cannot set both key and access token simultaneously.
 
 # Methods
 
